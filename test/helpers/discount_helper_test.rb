@@ -3,7 +3,7 @@ include DiscountHelper
 
 class DiscountHelperTest < ActiveSupport::TestCase
   def setup
-  	#new user and discount is valid
+    #new user and discount is valid
     @bill1 = Bill.new(1,110, Time.now , 'NEWUSER' ,1, 1)
     #discount expired
     @bill2 = Bill.new(1,110, Time.now - 1.day, 'NEWUSER' ,1, 1)
@@ -22,18 +22,18 @@ class DiscountHelperTest < ActiveSupport::TestCase
   end
 
   test "should_apply_discount" do
-  	discount = get_discounted_value(@bill1)
-  	assert_equal discount, 10 , "bill amount should be 10"
-  	discount = get_discounted_value(@bill2)
-  	assert_equal discount, 110, "bill amount should be 110"
-  	discount = get_discounted_value(@bill3)
-  	assert_equal discount, 110, "bill amount should be 110"
+    discount = get_discounted_value(@bill1)
+    assert_equal discount, 10 , "bill amount should be 10"
+    discount = get_discounted_value(@bill2)
+    assert_equal discount, 110, "bill amount should be 110"
+    discount = get_discounted_value(@bill3)
+    assert_equal discount, 110, "bill amount should be 110"
     discount = get_discounted_value(@bill4)
-  	assert_equal discount, 10, "bill amount should be 10"
-  	discount = get_discounted_value(@bill5)
-  	assert_equal discount, 110, "bill amount should be 110"
-  	discount = get_discounted_value(@bill6)
-  	assert_equal discount, 110, "bill amount should be 110"
+    assert_equal discount, 10, "bill amount should be 10"
+    discount = get_discounted_value(@bill5)
+    assert_equal discount, 110, "bill amount should be 110"
+    discount = get_discounted_value(@bill6)
+    assert_equal discount, 110, "bill amount should be 110"
     discount = get_discounted_value(@bill7)
     assert_equal discount, 110, "bill amount should be 110"
     discount = get_discounted_value(@bill8)
