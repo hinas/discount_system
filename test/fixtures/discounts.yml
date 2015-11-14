@@ -1,0 +1,53 @@
+discount_1:
+  id: 1
+  discount_code: 'NEWUSER'
+  begin_date: <%= Time.now %>
+  end_date: <%= Time.now + 10.days %>
+  min_order: 0
+  operation: "-"
+  value: 100
+  applicable_categories: [1,2,3,4]
+  applicable_modes: [1,2]
+
+discount_2:
+  id: 2
+  discount_code: 'OLDUSER'
+  begin_date: 
+  end_date: 
+  min_order: 0
+  operation: 'x'
+  value: 5
+  applicable_categories: [1]
+  applicable_modes: [1,2]
+
+discount_3:
+  id: 3
+  discount_code: 'MORE100'
+  begin_date: 
+  end_date: 
+  min_order: 100
+  operation: '/'
+  value: 100
+  applicable_categories: [1,2,3,4]
+  applicable_modes: [1,2]
+
+discount_4:
+  id: 4
+  discount_code: 'FB200'
+  begin_date: <%= Time.now %>
+  end_date: <%= Time.now + 10.days %>
+  min_order: 200
+  operation: "-"
+  value: 200
+  applicable_categories: [1,2,3]
+  applicable_modes: [2]
+discount_5:
+  id: 5
+  discount_code: 'ANYOTHER'
+  begin_date: 
+  end_date: 
+  min_order: 0
+  operation: "-"
+  value: 200
+  applicable_categories: [1]
+  applicable_modes: [1]
