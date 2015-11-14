@@ -6,7 +6,7 @@ class DiscountHelperTest < ActiveSupport::TestCase
     #new user and discount is valid
     @bill1 = Bill.new(1,110, Time.now , 'NEWUSER' ,1, 1)
     #discount expired
-    @bill2 = Bill.new(1,110, Time.now - 1.day, 'NEWUSER' ,1, 1)
+    @bill2 = Bill.new(1,110, Time.now + 1.year, 'NEWUSER' ,1, 1)
     #dicount not applicable on particular category
     @bill3 = Bill.new(1,110, Time.now, 'FB200' ,1, 4)
     #bill amount is less than the minimum value
@@ -19,6 +19,8 @@ class DiscountHelperTest < ActiveSupport::TestCase
     @bill7 = Bill.new(1,110, Time.now, nil ,1, 1)
     #discount applied is more than the bill amount
     @bill8 = Bill.new(1,110, Time.now, 'ANYOTHER' ,1, 1)
+    #discount not yet started
+    @bill9 = Bill.new(1,110, Time.now - 1.day, 'NEWUSER' ,1, 1)
   end
 
   test "should_apply_discount" do
@@ -38,5 +40,7 @@ class DiscountHelperTest < ActiveSupport::TestCase
     assert_equal discount, 110, "bill amount should be 110"
     discount = get_discounted_value(@bill8)
     assert_equal discount, 0 , "bill amount should be 0"
+    discount = get_discounted_value(@bill9)
+    assert_equal discount, 110 , "bill amount should be 110"
   end
 end
