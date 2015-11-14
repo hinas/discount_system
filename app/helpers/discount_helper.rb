@@ -3,6 +3,7 @@ module DiscountHelper
   def apply_discount
     bill = Bill.new(1,110,Time.now(),'NEWUSER',1, 1)
     bill.amount = get_discounted_value(bill)
+    ## some other code
   end
 
   def validate_discount bill
@@ -21,8 +22,8 @@ module DiscountHelper
 
   ## on service completion, process discount
   def get_discounted_value bill
-  	return 0 if bill.nil?
-  	bill_amount = bill.amount
+    return 0 if bill.nil?
+    bill_amount = bill.amount
     if discount = validate_discount(bill)
       if discount.operation.eql? "x"
         bill_amount = bill_amount * (1 - discount.value * 0.01)
@@ -32,8 +33,6 @@ module DiscountHelper
         bill_amount = bill_amount - discount.value
       end
     end
-    binding.pry
-    bill_amount = 0 if bill_amount < 0
-    return bill_amount
+    return bill_amount < 0 ? 0 : bill_amount
   end
 end
