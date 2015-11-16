@@ -3,6 +3,7 @@ include DiscountHelper
 
 class DiscountHelperTest < ActiveSupport::TestCase
   def setup
+    initialize_discount_rules
     #new user and discount is valid
     @bill1 = Bill.new(1,110, Time.now , 'NEWUSER' ,1, 1)
     #discount expired
@@ -26,7 +27,7 @@ class DiscountHelperTest < ActiveSupport::TestCase
   test "should_apply_discount" do
 
     #  this function needs to be called only once to initialize rules
-    ininitialize_discount_rules
+
     discount = get_discounted_value(@bill1)
     assert_equal discount, 10 , "bill amount should be 10"
     discount = get_discounted_value(@bill2)
