@@ -11,7 +11,7 @@ module DiscountHelper
   end
 
   def initialize_discount_rules
-    Rules::rule_hash.push("min_order_required" => "bill.amount >= discount.min_order")
+    Rules::rule_hash.push("bill.amount >= discount.min_order")
     Rules::rule_hash.push("discount.applicable_categories.present? ? (discount.applicable_categories.include? bill.category_id) : false")
     Rules::rule_hash.push("discount.applicable_modes.present? ? (discount.applicable_modes.include? bill.mode_of_payment) : false")
     Rules::rule_hash.push("discount.begin_date.nil? ? true : (bill.order_time - discount.begin_date >= 0)")
