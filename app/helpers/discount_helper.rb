@@ -1,25 +1,25 @@
 module DiscountHelper
-  Rules::rule_hash = []
-  def add_rule(rule)
-    Rules::rule_hash.push(rule)
+  Rules::rule_hash = HashWithIndifferentAccess.new
+  def add_rule(key,rule)
+    Rules::rule_hash[key] = rule
   end 
 
   def validate_rules(bill,discount)
     result = true
-    Rules::rule_hash.each { |a| result = result && eval(a)}
+    Rules::rule_hash.each { |key,a| result = result && eval(a)}
     return result
   end
 
   def initialize_discount_rules
-    Rules::rule_hash.push("bill.amount >= discount.min_order")
-    Rules::rule_hash.push("discount.applicable_categories.present? ? (discount.applicable_categories.include? bill.category_id) : false")
-    Rules::rule_hash.push("discount.applicable_modes.present? ? (discount.applicable_modes.include? bill.mode_of_payment) : false")
-    Rules::rule_hash.push("discount.begin_date.nil? ? true : (bill.order_time - discount.begin_date >= 0)")
-    Rules::rule_hash.push("discount.end_date.nil? ? true : (bill.order_time - discount.end_date <= 0)")
+    Rules::rule_hash.merge!(:min_amount_required => "bill.amount >= discount.min_order")
+    Rules::rule_hash.merge!(:category_applicable => "discount.applicable_categories.present? ? (discount.applicable_categories.include? bill.category_id) : false")
+    Rules::rule_hash.merge!(:mode_applicable => "discount.applicable_modes.present? ? (discount.applicable_modes.include? bill.mode_of_payment) : false")
+    Rules::rule_hash.merge!(:not_begin => "discount.begin_date.nil? ? true : (bill.order_time - discount.begin_date >= 0)")
+    Rules::rule_hash.merge!(:expired => "discount.end_date.nil? ? true : (bill.order_time - discount.end_date <= 0)")
   end
 
-  def del_rule(rule)
-    Rules::rule_hash.delete(rule)
+  def del_rule(key)
+    Rules::rule_hash.delete(key)
   end
 
    # on service completion, we can apply dicount on the bill
